@@ -1,0 +1,864 @@
+{
+	"info": {
+		"_postman_id": "c64619a7-189d-4ef8-80f0-35c66ae1e319",
+		"name": "Tacx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27935166"
+	},
+	"item": [
+		{
+			"name": "Base Requests",
+			"item": [
+				{
+					"name": "get_all_employees",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Name</th>\r",
+									"        <th>Salary</th>\r",
+									"        <th>Age</th>\r",
+									"        <th>Profile Image</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response.data}}\r",
+									"        <tr>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{employee_name}}</td>\r",
+									"            <td>{{employee_salary}}</td>\r",
+									"            <td>{{employee_age}}</td>\r",
+									"            <td>{{profile_image}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/employees",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one_employee",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/employee/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"employee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8899",
+									"description": "id of employee"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"24242424\",\r\n    \"age\": \"33\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_employee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"123242424\",\r\n    \"age\": \"100\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/update/:variabile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"update",
+								":variabile"
+							],
+							"variable": [
+								{
+									"key": "variabile",
+									"value": "35"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/delete/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "24",
+									"description": "id of employee"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Get_Employee",
+					"item": [
+						{
+							"name": "get_all_employees",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Base_url}}/employees",
+									"host": [
+										"{{Base_url}}"
+									],
+									"path": [
+										"employees"
+									]
+								},
+								"description": "with this request we get all the Employees from the DB."
+							},
+							"response": []
+						},
+						{
+							"name": "get_1_employee_with_valid_id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/employee/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"employee",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "23",
+											"description": "id of employee"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get_1_employee_with_invalid_id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/employee/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"employee",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "25",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "In this request we will try to request a employee with an id that is does not exist."
+							},
+							"response": []
+						},
+						{
+							"name": "get_1_employee_with_string_as_id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/employee/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"employee",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "text",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "In this request we will try to request a employee with an id that is string"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create_Employee",
+					"item": [
+						{
+							"name": "all_fields_filled",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"24242424\",\r\n    \"age\": \"33\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee with all the fields filled correctly"
+							},
+							"response": []
+						},
+						{
+							"name": "only_name",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee only specifying the name"
+							},
+							"response": []
+						},
+						{
+							"name": "only_salary",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"2424242424\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee only specifying the salary"
+							},
+							"response": []
+						},
+						{
+							"name": "only_age",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"\",\r\n    \"age\": \"35\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee only specifying tha age"
+							},
+							"response": []
+						},
+						{
+							"name": "all_fields_empty",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee with all the fields empty"
+							},
+							"response": []
+						},
+						{
+							"name": "no_fields",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   // \"name\": \"Tudor_Odo\",\r\n   // \"salary\": \"24242424\",\r\n   // \"age\": \"33\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/create",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"create"
+									]
+								},
+								"description": "In this request we will try to create an employee with no fields in the body of the request -> we should get a negative response code"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update_Employee",
+					"item": [
+						{
+							"name": "all_fields_filled",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"123242424\",\r\n    \"age\": \"33\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "24",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee with all the fields updated"
+							},
+							"response": []
+						},
+						{
+							"name": "only_name_filed",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "35",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee by only changing the Name"
+							},
+							"response": []
+						},
+						{
+							"name": "only_salary_filed",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"22325\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "35",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee by only changing the Salary"
+							},
+							"response": []
+						},
+						{
+							"name": "only_age_filed",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"\",\r\n    \"age\": \"60\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "35",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee by only changing the Age"
+							},
+							"response": []
+						},
+						{
+							"name": "all_fields_empty",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"salary\": \"\",\r\n    \"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "35",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee with all the fields empty -> we should get an error"
+							},
+							"response": []
+						},
+						{
+							"name": "id_field_string",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tudor_Odo\",\r\n    \"salary\": \"123242424\",\r\n    \"age\": \"33\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "text",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Update an employee where the id will be a string -> this should result in a error."
+							},
+							"response": []
+						},
+						{
+							"name": "no_fields",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    //\"name\": \"\",\r\n    //\"salary\": \"\",\r\n    //\"age\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/update/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "35"
+										}
+									]
+								},
+								"description": "Update an employee with not fields in the request body"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "valid_id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/delete/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "24",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Delete an employee with a valid id"
+							},
+							"response": []
+						},
+						{
+							"name": "invalid_id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/delete/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2412123123125123125",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Delete an employee with an invalid id"
+							},
+							"response": []
+						},
+						{
+							"name": "string_as_id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/delete/:id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "text",
+											"description": "id of employee"
+										}
+									]
+								},
+								"description": "Delete an employee with a string as id -> should result in an error"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "employee_id_number",
+			"value": "1"
+		},
+		{
+			"key": "Base_url",
+			"value": "https://dummy.restapiexample.com/api/v1/"
+		},
+		{
+			"key": "URL",
+			"value": "\thttps://dummy.restapiexample.com/api/v1"
+		}
+	]
+}
